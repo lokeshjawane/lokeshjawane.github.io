@@ -93,7 +93,7 @@ canvas {
 .count-particles {
   -webkit-user-select: none;
   margin-top: 5px;
-  margin-left: 5px;
+  margin-left: 5px;3
 }
 #stats {
   border-radius: 3px 3px 0 0;
@@ -101,6 +101,7 @@ canvas {
 }
 .count-particles {
   border-radius: 0 0 3px 100x;
+  background: transparent;
 }
 
 
