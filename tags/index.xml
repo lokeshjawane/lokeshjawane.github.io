@@ -1,56 +1,10 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tags on Myself Lokesh Jawane, working as devops engg and consultant.</title>
+    <title>Tags on Lokesh-Devops</title>
     <link>https://lokeshjawane.github.io/tags/</link>
-    <description>Recent content in Tags on Myself Lokesh Jawane, working as devops engg and consultant.</description>
+    <description>Recent content in Tags on Lokesh-Devops</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Sat, 02 Apr 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://lokeshjawane.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>aws</title>
-      <link>https://lokeshjawane.github.io/tags/aws/</link>
-      <pubDate>Sat, 02 Apr 2016 00:00:00 +0000</pubDate>
-      
-      <guid>https://lokeshjawane.github.io/tags/aws/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>development</title>
-      <link>https://lokeshjawane.github.io/tags/development/</link>
-      <pubDate>Sat, 02 Apr 2016 00:00:00 +0000</pubDate>
-      
-      <guid>https://lokeshjawane.github.io/tags/development/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>golang</title>
-      <link>https://lokeshjawane.github.io/tags/golang/</link>
-      <pubDate>Sat, 02 Apr 2016 00:00:00 +0000</pubDate>
-      
-      <guid>https://lokeshjawane.github.io/tags/golang/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>hugo</title>
-      <link>https://lokeshjawane.github.io/tags/hugo/</link>
-      <pubDate>Sat, 02 Apr 2016 00:00:00 +0000</pubDate>
-      
-      <guid>https://lokeshjawane.github.io/tags/hugo/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>go</title>
-      <link>https://lokeshjawane.github.io/tags/go/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
-      
-      <guid>https://lokeshjawane.github.io/tags/go/</guid>
-      <description></description>
-    </item>
-    
+    <language>en-us</language><atom:link href="https://lokeshjawane.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>

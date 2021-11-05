@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title> Secure AWS Env &middot; Lokesh-Devops </title>
+
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="generator" content="Hugo 0.88.1" />
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://lokeshjawane.github.io/css/nix.css">
+
+
+
+
+
+<link href="https://fonts.googleapis.com/css?family=Inconsolata%7COpen+Sans%7CConcert+One" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap" rel="stylesheet">
+
+
+
+
+
+    </head>
+
+    <body>
+        <header>
+<nav class="navbar navbar-default navbar-fixed-top navbar-inverse font-header">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+      <a class="navbar-brand" id="green-terminal" href='https://lokeshjawane.github.io/'>
+        lokesh@DevOps ~ $
+      </a>
+		</div>
+
+		
+		<div class="collapse navbar-collapse" id="navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href='https://lokeshjawane.github.io/'>/home</a>
+        </li>
+        
+				
+				
+				<li class="dropdown">
+                    
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">/about <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        
+                    		<li>
+                    		<a href="https://lokeshjawane.github.io/about/me">/about/me</a>
+				    		</li>
+                		
+                    		<li>
+                    		<a href="https://lokeshjawane.github.io/about/work">/about/work</a>
+				    		</li>
+                		
+            		</ul>
+            		
+        		</li>
+        		
+				
+				<li class="dropdown">
+                    
+            		<a href="https://lokeshjawane.github.io/posts">/posts</a>
+            		
+        		</li>
+        		
+
+			</ul>
+		</div>
+	</div>
+</nav>
+</header>
+
+        <div class="flex-wrapper">
+            <div class="container wrapper">
+                <h1><a href="https://lokeshjawane.github.io/posts/aws-account-security/">Secure AWS Env</a></h1>
+                <span class="post-date">Published on : 2014-09-28   | By : Lokesh Jawne</span>
+                <div class="post-content">
+                    <h2 id="securing-aws-env">Securing AWS Env</h2>
+<hr>
+<p>Deploying an infra, is almost pretty straight forward now a days. There are multiple tools which helps you to automate the things and manage it in better way and update regularly. But talking about the data transport, many people take about the account and data security. If you re setting up an infra on AWS, you might be interested in implement following things to make you AWS infra more secure</p>
+<h3 id="1-secure-aws-account-first">1. Secure AWS Account first</h3>
+<p>As an AWS admin, you should always think to limit the service/resource deployment in specific region, it means prepare the IAM access to aws account which will basically restrict the resources deployment in fixed regions only. So if an attacker tries to launch any resources with any compromised creds? An IAM would not allow it to do that.</p>
+<pre><code>Reference : [https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_aws_deny-requested-region.html
+</code></pre>
+<p>   </p>
+<h3 id="2-access-aws-via-only-authorised-ips">2. Access AWS via only authorised IP’s</h3>
+<p>This is the additional layer that you can think of to enhance the account login mechanism. In general a user can login to the AWS account from any where in the world. Which can be limit only from specific IP, which means it can be done by allowing AWS login only through the specific ip or ip range. If you have office VPN then allow aws login only from VPN.</p>
+<pre><code>Reference : https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_aws_deny-ip.html
+</code></pre>
+<p>This could be little challenging to implement as you have use it with other policies combination to manage IAM access for a users.<br>
+   </p>
+<h3 id="3-managing-iam">3. Managing IAM</h3>
+<p>The best way is to manage AWS IAM access is using automation tools with any of CICD tools. Basically, we can say it, managing IAM access as code. Which is very effective way to handle grant and revoke access from single origin and run the automation job only on EC2 instance which will have IAM admin access and none of the user would be able to manage/execute automation from AWS outside.</p>
+<p>   </p>
+<h3 id="4-enable-mfa">4. Enable MFA</h3>
+<p>Enabling MFA should be the mandatory process for all IAM user. It is good practice to keep IAM access stick to the single user, Even your cred gets compromised. Always get the temporary credentials for AWS CLI access with shorter time periods that even you expose the creds by mistake, you don’t need to get worried.</p>
+<pre><code>Reference : https://aws.amazon.com/premiumsupport/knowledge-center/authenticate-mfa-cli/
+</code></pre>
+<p>Grant IAM user permission to manage the MFA device and console password</p>
+<pre><code>Reference: [https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_aws_my-sec-creds-self-manage.html](https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_aws_my-sec-creds-self-manage.html)  
+</code></pre>
+<p>   </p>
+<h3 id="5-use-aws-provided-service-to-keep-you-account-secure">5. Use AWS provided service to keep you account secure</h3>
+<pre><code>- AWS config - to keep resources compliance.  
+- AWS trusted advisor  
+- IAM analyser  
+- AWS Security hub  
+- Prefer AD/SAML auth integration for  console login and use STS  with role to get temporary creds for limited time.  
+</code></pre>
+<p>   </p>
+<h3 id="6-few-more-things-the-you-can-setup-while-creating-new-account-or-securing-existing-account">6. Few more things the you can setup while creating new account or securing existing account.</h3>
+<pre><code>- Setup cron to get report about security creds password rotation periodically, allow them manage themselves by assigning following policy  https://docs.aws.amazon.com/IAM/latest/UserGuide/reference_policies_examples_iam_credentials_console.html  
+
+- Grant fine grain access to the user/group/roles. Always user cloud tracker or follow [https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_getting-report.html](https://docs.aws.amazon.com/IAM/latest/UserGuide/id_credentials_getting-report.html) to analyse the permissions and keep them fine grained.  
+
+- Keep alerting system in place for IAM changes.
+</code></pre>
+
+                </div>
+                
+                <div class="post-comments">
+                    
+                </div>
+                
+            </div>
+            <footer class="footer text-center">
+<p>Copyright &copy; 2021 lokeshjawane
+</p>
+</footer>
+
+        </div>
+    </body>

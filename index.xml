@@ -1,40 +1,50 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Myself Lokesh Jawane, working as devops engg and consultant.</title>
+    <title>Lokesh-Devops</title>
     <link>https://lokeshjawane.github.io/</link>
-    <description>Recent content on Myself Lokesh Jawane, working as devops engg and consultant.</description>
+    <description>Recent content on Lokesh-Devops</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 02 Apr 2016 00:00:00 +0000</lastBuildDate><atom:link href="https://lokeshjawane.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 04 Nov 2021 00:00:00 +0000</lastBuildDate><atom:link href="https://lokeshjawane.github.io/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>AWS account security</title>
-      <link>https://lokeshjawane.github.io/posts/aws-security-at-first/</link>
-      <pubDate>Sat, 02 Apr 2016 00:00:00 +0000</pubDate>
+      <title>SAM for serverless lamda</title>
+      <link>https://lokeshjawane.github.io/posts/sam/</link>
+      <pubDate>Thu, 04 Nov 2021 00:00:00 +0000</pubDate>
       
-      <guid>https://lokeshjawane.github.io/posts/aws-security-at-first/</guid>
-      <description>Securing AWS Env Deploying an infra, is almost pretty straight forward now a days. There are multiple tools which helps you to automate the things and manage it in better way and update regularly. But talking about the data transport, many people take about the account and data security. If you re setting up an infra on AWS, you might be interested in implement following things to make you AWS infra more secure</description>
+      <guid>https://lokeshjawane.github.io/posts/sam/</guid>
+      <description>Lambda Using SAM It been a long time i have worked on lambda deployment and most of the time doing it manually just because of on-demand request for the deployment. But then thought to remove the dependency from me and have some event based automation in place and can be easily adopt by developer.
+But as there are many lambda&amp;rsquo;s in project which uses diff technologies, the challenge was to manage the automation for each and manage the package to build the code and i came across one thing&amp;hellip;</description>
     </item>
     
     <item>
-      <title>Getting Started with Hugo</title>
-      <link>https://lokeshjawane.github.io/about/</link>
-      <pubDate>Wed, 02 Apr 2014 00:00:00 +0000</pubDate>
+      <title>Secure AWS Env</title>
+      <link>https://lokeshjawane.github.io/posts/aws-account-security/</link>
+      <pubDate>Sun, 28 Sep 2014 00:00:00 +0000</pubDate>
       
-      <guid>https://lokeshjawane.github.io/about/</guid>
-      <description>It&amp;rsquo;s not about me, actually we are a team of DevOps practitioners, who love to build the simple solution to the complex problems or in the other can say to build the solution which can be adopt easily by dev+ops team and improve the productivity and the work efficiency.
+      <guid>https://lokeshjawane.github.io/posts/aws-account-security/</guid>
+      <description>Securing AWS Env  Deploying an infra, is almost pretty straight forward now a days. There are multiple tools which helps you to automate the things and manage it in better way and update regularly. But talking about the data transport, many people take about the account and data security. If you re setting up an infra on AWS, you might be interested in implement following things to make you AWS infra more secure</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://lokeshjawane.github.io/about/me/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://lokeshjawane.github.io/about/me/</guid>
+      <description>About Us! It’s not about me, actually we are a team of DevOps practitioners, who love to build the simple solution to the complex problems or in the other can say to build the solution which can be adopt easily by dev+ops team and improve the productivity and the work efficiency.
 We work across multiple devops tools, technology and cloud services. Buildig the automation to deploy cloud services, define security practices, setup DR practices, Continous monitoring and alerting system, Helping dev to deploy applications as micro serivces and end-to-end Infra Migration and more.</description>
     </item>
     
     <item>
-      <title>Projects Work</title>
-      <link>https://lokeshjawane.github.io/work/</link>
+      <title></title>
+      <link>https://lokeshjawane.github.io/about/work/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>https://lokeshjawane.github.io/work/</guid>
-      <description>Project : Risekit Tech stack: Github Action, Terraform, AWS EC2, RDS, DMS, Code Deploy, S3, Cloudwatch.
+      <guid>https://lokeshjawane.github.io/about/work/</guid>
+      <description>Projects Work  Project : Risekit Tech stack: Github Action, Terraform, AWS EC2, RDS, DMS, Code Deploy, S3, Cloudwatch.
 Summary: Automated the infra deployment using Terraform which execute within Github Action pipeline(following gitops methodology) followed by application deployment using code deploy. Also done the DB migration using AWS dms service.
- Project : Helpful crowd, Tech stack: : Circle CI, Terraform, AWS EC2, RDS(postgresql), DMS S3, Cloudwatch, Redis.
+  Project : Helpful crowd, Tech stack: : Circle CI, Terraform, AWS EC2, RDS(postgresql), DMS S3, Cloudwatch, Redis.
 Summary: The end-to-end infra migration project.</description>
     </item>
     
