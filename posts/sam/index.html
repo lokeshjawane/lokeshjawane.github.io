@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title> SAM for serverless lamda &middot; Lokesh-Devops </title>
+
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="generator" content="Hugo 0.88.1" />
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://lokeshjawane.github.io/css/nix.css">
+
+
+
+
+
+<link href="https://fonts.googleapis.com/css?family=Inconsolata%7COpen+Sans%7CConcert+One" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap" rel="stylesheet">
+
+
+
+
+
+    </head>
+
+    <body>
+        <header>
+<nav class="navbar navbar-default navbar-fixed-top navbar-inverse font-header">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+      <a class="navbar-brand" id="green-terminal" href='https://lokeshjawane.github.io/'>
+        lokesh@DevOps ~ $
+      </a>
+		</div>
+
+		
+		<div class="collapse navbar-collapse" id="navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href='https://lokeshjawane.github.io/'>/home</a>
+        </li>
+        
+				
+				
+				<li class="dropdown">
+                    
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">/about <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        
+                    		<li>
+                    		<a href="https://lokeshjawane.github.io/about/me">/about/me</a>
+				    		</li>
+                		
+                    		<li>
+                    		<a href="https://lokeshjawane.github.io/about/work">/about/work</a>
+				    		</li>
+                		
+            		</ul>
+            		
+        		</li>
+        		
+				
+				<li class="dropdown">
+                    
+            		<a href="https://lokeshjawane.github.io/posts">/posts</a>
+            		
+        		</li>
+        		
+
+			</ul>
+		</div>
+	</div>
+</nav>
+</header>
+
+        <div class="flex-wrapper">
+            <div class="container wrapper">
+                <h1><a href="https://lokeshjawane.github.io/posts/sam/">SAM for serverless lamda</a></h1>
+                <span class="post-date">Published on : 2021-11-04   | By : Lokesh Jawne</span>
+                <div class="post-content">
+                    <h1 id="lambda-using-sam">Lambda Using SAM</h1>
+<p>It been a long time i have worked on lambda deployment and most of the time doing it manually just because of on-demand request for the deployment. But then thought to remove the dependency from me and have some event based automation in place and can be easily adopt by developer.</p>
+<p>But as there are many lambda&rsquo;s in project which uses diff technologies, the challenge was to manage the automation for each and manage the package to  build the code and  i came across one thing&hellip;<br>
+ </p>
+<h2 id="samserverless-application-model">SAM(serverless application model)</h2>
+<p>A serverless application model/framework is a combination of Lambda functions, event sources, and other resources that work together to perform tasks. Note that a serverless application is more than just a Lambda function, It can also manage the additional  resource creation along with your lambda function. Basically there are two components in SAM.</p>
+<p><strong>1. CLI</strong><br>
+ 
+A Binary installled on you workstation which help to manage complete SAM activities<br>
+<strong>2. CF Template</strong><br>
+ 
+SAM manages the lambda and AWS resources using CF template only and defining <strong>AWS::Serverless::Function</strong> is primary CF resource for SAM.</p>
+<p>SAM also helps you to manage the build generation for lamda in <strong>ZIP</strong> or <strong>Docker image</strong> format. Through out this blog will be using docker image only for deployment.<br>
+ </p>
+<h3 id="installation">Installation</h3>
+<p><code>pip install aws-sam-cli</code></p>
+<h3 id="how-to">How To?</h3>
+<p>lets have a walk through on implementation<br>
+ </p>
+<h4 id="1-create-hello-app">1. Create hello-app</h4>
+<pre tabindex="0"><code>ubuntu@x.y.z.p:~$ sam init --architecture arm64
+Which template source would you like to use?
+	1 - AWS Quick Start Templates
+	2 - Custom Template Location
+Choice: 1
+What package type would you like to use?
+	1 - Zip (artifact is a zip uploaded to S3)
+	2 - Image (artifact is an image uploaded to an ECR image repository)
+Package type: 2
+Which base image would you like to use?
+	1 - amazon/nodejs14.x-base
+    .
+    .
+	11 - amazon/go1.x-base
+Base image: 11
+Project name [sam-app]: hello-app
+Cloning from [https://github.com/aws/aws-sam-cli-app-templates](https://github.com/aws/aws-sam-cli-app-templates)
+    -----------------------
+    Generating application:
+    -----------------------
+    Name: hello-app
+    Base Image: amazon/go1.x-base
+    Architectures: arm64
+    Dependency Manager: mod
+    Output Directory: .
+
+</code></pre><p>The above process create very minimal CF template, so for additional setting like customise lambda iam role, policy, api gateway, etc refer <a href="https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html">link</a><br>
+ </p>
+<h4 id="2-im-going-to-change-image-tag-based-on-arm64-arch-in-hello-worlddockerfile-because-right-now-it-is-using-amd64-image-tag">2. I&rsquo;m going to Change image tag based on <code>arm64</code> arch in hello-world/Dockerfile, because right now it is using amd64 image tag.</h4>
+<p><code>image: public.ecr.aws/o8d0c9k1/golang:1.16.8-arm64</code><br>
+ </p>
+<h4 id="3-build-the-the-lambda-code">3. Build the the lambda code.</h4>
+<pre tabindex="0"><code>sam build
+</code></pre><p>At this point the SAM automatically detect the runtime from config and perform build activity, generate the docker image and build final CF template. Final template can be found at <code>.aws-sam</code> folder.<br>
+ </p>
+<h4 id="4-sam-package-this-steps-publish-the-docker-image-to-ecrdocker-repo-and-get-ready-everything-for-deployment">4. Sam package, this steps publish the docker image to ECR(docker) repo and get ready everything for deployment.</h4>
+<p>Requirements/Pre-requisites;</p>
+<pre tabindex="0"><code>sam  package --image-repository  &lt;ECR repo url&gt; --region &lt;aws region&gt;
+</code></pre><p><strong>Note</strong>: Make sure the AWS creds are set and ecr docker login is success before executing package command.<br>
+ </p>
+<h4 id="5-sam-deploy-finally-deploy-lambda-using-docker-image">5. Sam deploy, finally deploy lambda using docker image</h4>
+<pre tabindex="0"><code>sam  deploy --region &lt;aws region&gt; --stack-name &lt;stackname&gt; --image-repository &lt;ECR repo url&gt;  --capabilities CAPABILITY_IAM
+</code></pre><p>Now, You should see the Lambda function deployed using CF stack. Now you can try the lambda update just with the code changes and run build,package and deploy. But you have to make sure that the image tag for latest code is updated in <code>template.yaml</code> CF template, else the SAM will override the docker image with previous tag.<br>
+  </p>
+<p><strong>Tips:</strong> You can customize the CF for the to accept variables value  and pass the variable value with the <code>--parameter-overrides</code> option with build and package command.</p>
+<h3 id="local-development">Local Development</h3>
+<p>For Development and testing purpose, you can run the serverless app on local machine using below command.</p>
+<pre tabindex="0"><code>sam local invoke --debug  
+</code></pre><p><strong>Note:</strong>  Make sure the selected architecture is matching with local machine configs else local execution won&rsquo;t work.<br>
+ </p>
+<h3 id="next">Next</h3>
+<p>Build a generic pipeline which can be adopt easily by dev&rsquo;s for any lambda function deployment.<br>
+ </p>
+<p>To be continued&hellip;&hellip;</p>
+
+                </div>
+                
+                <div class="post-comments">
+                    
+                </div>
+                
+            </div>
+            <footer class="footer text-center">
+<p>Copyright &copy; 2021 lokeshjawane
+</p>
+</footer>
+
+        </div>
+    </body>

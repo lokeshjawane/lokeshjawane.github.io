@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Abouts on Lokesh-Devops</title>
+    <link>https://lokeshjawane.github.io/about/</link>
+    <description>Recent content in Abouts on Lokesh-Devops</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://lokeshjawane.github.io/about/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title></title>
+      <link>https://lokeshjawane.github.io/about/me/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://lokeshjawane.github.io/about/me/</guid>
+      <description>About Us! It’s not about me, actually we are a team of DevOps practitioners, who love to build the simple solution to the complex problems or in the other can say to build the solution which can be adopt easily by dev+ops team and improve the productivity and the work efficiency.
+We work across multiple devops tools, technology and cloud services. Buildig the automation to deploy cloud services, define security practices, setup DR practices, Continous monitoring and alerting system, Helping dev to deploy applications as micro serivces and end-to-end Infra Migration and more.</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>https://lokeshjawane.github.io/about/work/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://lokeshjawane.github.io/about/work/</guid>
+      <description>Projects Work  Project : Risekit Tech stack: Github Action, Terraform, AWS EC2, RDS, DMS, Code Deploy, S3, Cloudwatch.
+Summary: Automated the infra deployment using Terraform which execute within Github Action pipeline(following gitops methodology) followed by application deployment using code deploy. Also done the DB migration using AWS dms service.
+  Project : Helpful crowd, Tech stack: : Circle CI, Terraform, AWS EC2, RDS(postgresql), DMS S3, Cloudwatch, Redis.
+Summary: The end-to-end infra migration project.</description>
+    </item>
+    
+  </channel>
+</rss>
