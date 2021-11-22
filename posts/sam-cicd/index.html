@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title> Automate SAM with CICD &middot; Lokesh-Devops </title>
+
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="generator" content="Hugo 0.88.1" />
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://lokeshjawane.github.io/css/nix.css">
+
+
+
+
+
+<link href="https://fonts.googleapis.com/css?family=Inconsolata%7COpen+Sans%7CConcert+One" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap" rel="stylesheet">
+
+
+
+
+
+    </head>
+
+    <body>
+        <header>
+<nav class="navbar navbar-default navbar-fixed-top navbar-inverse font-header">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-1" aria-expanded="false">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+      <a class="navbar-brand" id="green-terminal" href='https://lokeshjawane.github.io/'>
+        lokesh@DevOps ~ $
+      </a>
+		</div>
+
+		
+		<div class="collapse navbar-collapse" id="navbar-collapse-1">
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a href='https://lokeshjawane.github.io/'>/home</a>
+        </li>
+        
+				
+				
+				<li class="dropdown">
+                    
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">/about <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        
+                    		<li>
+                    		<a href="https://lokeshjawane.github.io/about/me">/about/me</a>
+				    		</li>
+                		
+                    		<li>
+                    		<a href="https://lokeshjawane.github.io/about/work">/about/work</a>
+				    		</li>
+                		
+            		</ul>
+            		
+        		</li>
+        		
+				
+				<li class="dropdown">
+                    
+            		<a href="https://lokeshjawane.github.io/posts">/posts</a>
+            		
+        		</li>
+        		
+
+			</ul>
+		</div>
+	</div>
+</nav>
+</header>
+
+        <div class="flex-wrapper">
+            <div class="container wrapper">
+                <h1><a href="https://lokeshjawane.github.io/posts/sam-cicd/">Automate SAM with CICD</a></h1>
+                <span class="post-date">Published on : 2021-11-22   | By : Lokesh Jawne</span>
+                <div class="post-content">
+                    <p> </p>
+<h1 id="lambda-deployment-pipeline">Lambda deployment pipeline</h1>
+<p>This is the part2 of <a href="https://lokeshjawane.github.io/posts/sam/">SAM(part1)</a>), In the first part we have implemented SAM to ease the lambda deployment. But to make it more easier, lets now automate it using CICD practice. The aim is to have a simplified process for developer to automated the lambda deployment process even their devops is offline :D.</p>
+<p>In this post, we will further automated the the lambda deployment with CICD. Here we will templatize the process which can be use/implement with any CICD tool and minimised manual work to setup pipeline using any scm repo.</p>
+<h3 id="disclaimer">Disclaimer</h3>
+<p>This article doesn&rsquo;t relates to specific CICD tools and SCM, This is the generic approach/solution to deploy and manage the lambda. Read and understand the blog carefully :P</p>
+<p> </p>
+<p>Lets start with it&hellip;.</p>
+<h2 id="components">Components</h2>
+<h4 id="1-directory-structure">1. Directory structure</h4>
+<pre tabindex="0"><code>/-
+  - app        // application code
+  - sam
+    - envs
+      - staging.json
+      - production.json
+    - template.yaml
+</code></pre><p><strong>Description</strong></p>
+<ul>
+<li><code>/</code> is the scm repo root location</li>
+<li><code>sam</code> directory is contains all SAM related stuff</li>
+<li><code>env</code> folder i have used to store the env related files in <code>.json</code> format, number of file would based on your env&rsquo;s you have.</li>
+<li><code>template.yml</code> is cloud formation template file, which can generated by <code>sa init</code> and edited by you.</li>
+</ul>
+<p> </p>
+<h4 id="2-cloud-formation-template">2. Cloud formation Template</h4>
+<p>You can use default generated template by <code>sam init</code> or update the resources according to the need in to the default template and place at <code>sam/template.yaml</code> location, but make sure it has <code>AWS::Serverless::Function</code> resource defined as it&rsquo;s mandatory. though this resource has more capability(like manage triggers, api gateway, lambda integration) than just managing the lambda deploy.</p>
+<p> </p>
+<h4 id="3-folder-app">3. Folder <code>app</code></h4>
+<p>This folder contains the actual lambda code like, app.js, requirements.txt etc.
+So while committing the code make sure everything has been moved to this folder.</p>
+<p> </p>
+<h4 id="4-script">4. Script</h4>
+<p>Now lets have a look at scripts, use the same script in your CICD pipeline.</p>
+<pre tabindex="0"><code> #Install dependent packages, OS ubuntu
+ cd /tmp
+ apt-get update &amp;&amp; apt-get install libc6 groff less jq -y
+ curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64-2.0.30.zip -o awscliv2.zip
+ unzip awscliv2.zip
+ ./aws/install
+ wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
+ unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
+ ./sam-installation/install
+ sam --version
+ cd -
+
+ #Get the AWS creds by assuming role
+ output=$(aws sts assume-role --role-arn &lt;aws iam role arn&gt; --duration-seconds 900 --role-session-name AWSCLI-Session)
+ export AWS_ACCESS_KEY_ID=$(echo $output | jq -r .Credentials.AccessKeyId)
+ export AWS_SECRET_ACCESS_KEY=$(echo $output | jq -r .Credentials.SecretAccessKey)
+ export AWS_SESSION_TOKEN=$(echo $output | jq -r .Credentials.SessionToken)
+
+ #Start Sam activity
+ export override_params=$(cat sam/env/$env.json  | jq '.cf_params[]| &quot;ParameterKey=&quot; + .ParameterKey + &quot;,ParameterValue=&quot; + .ParameterValue' | sed 's/&quot;//g' | tr '\n' ' ')
+ export envs=$(cat sam/env/$env.json  | jq '.lambda_env_vars')
+ cp sam/template.yaml template.yaml
+ sam build  -t template.yaml --parameter-overrides $override_params
+ sam package --output-template-file .aws-sam/packaged.yaml  --region us-east-1  --s3-bucket  &lt;s3-bucket-name&gt;  --s3-prefix &lt;app-name&gt;/$env
+ mv .aws-sam/packaged.yaml .aws-sam/packaged-orig.yaml
+ cat .aws-sam/packaged-orig.yaml | jq '.Resources.LambdaFunction.Properties += {Environment: {Variables: '&quot;$envs&quot;'}}' &gt; .aws-sam/packaged.yaml
+ sam deploy -t .aws-sam/packaged.yaml --region $region  --stack-name &quot;&lt;app-name&gt;-lambda&quot; --parameter-overrides $override_params --capabilities CAPABILITY_IAM
+</code></pre><p><strong>Note</strong>: Replace <code>&lt; &gt;</code> details as per requirement in above script.</p>
+<p><strong>Script Description</strong><br>
+ 
+The above script has 3 section</p>
+<h4 id="1-install-dependency-packages--installing-all-the-dependencies--required-for-this-automation-here-im-using-ubuntu-os-to-run-this-script">1. <strong>Install dependency packages:</strong>  Installing all the dependencies  required for this automation, here i&rsquo;m using ubuntu OS to run this script.</h4>
+<h4 id="2-aws-creds-to-get-the-aws-im-assuming-the-iam-role-for-temporary-creds-you-can-replace-it-with-aws-env-vars-as-well-and-tweak-the-script">2. <strong>AWS creds:</strong> To get the AWS i&rsquo;m assuming the IAM role for temporary creds. You can replace it with AWS Env vars as well and tweak the script.</h4>
+<h4 id="3--start-sam-activity-managing-the-cf-template-variable-build-publish-deploy-lambda-this-activity-also-prepare-custom-parametercf-parameteres-from-envjson-string-and-pass-to-the-sam-cli-with---parameter-overrides-option">3.  <strong>Start SAM activity:</strong> Managing the CF template variable, build, publish, deploy lambda. This activity also prepare custom parameter(CF parameteres from $env.json) string and pass to the <strong>SAM</strong> cli with <code>--parameter-overrides</code> option.</h4>
+<p> </p>
+<h2 id="variables">Variables</h2>
+<p>You have to export these vars for each env lambda deployment, as they are being used in SAM activity.<br>
+ </p>
+<h4 id="1-env">1. $env</h4>
+<p>This var be set based on the env selection, like commit on <code>staging</code> branch then set <code>env=&quot;staging&quot;</code>.<br>
+ </p>
+<h4 id="2-envjson-cf-params-env-file-name">2. $env.json (CF params env file name)</h4>
+<p>Set the below CF params value in <code>sam/env/staging|prod.json</code> for cloudformation template as per number of env. SAM job picks up the env json file based on $env vars.
+ </p>
+<pre tabindex="0"><code>{&quot;cf_params&quot; : [
+       {&quot;ParameterKey&quot;: &quot;Runtime&quot;,&quot;ParameterValue&quot;: &quot;go1.x&quot;},
+       {&quot;ParameterKey&quot;: &quot;SubnetIds&quot;,&quot;ParameterValue&quot;: &quot;subnet-xxxxxx,subnet-yyyyyy&quot;},
+       {&quot;ParameterKey&quot;: &quot;S3BucketName&quot;,&quot;ParameterValue&quot;: &quot;test-lambda-deploy&quot;},
+       {&quot;ParameterKey&quot;: &quot;VPC&quot;,&quot;ParameterValue&quot;: &quot;vpc-abcdef&quot;},
+       {&quot;ParameterKey&quot;: &quot;LambdaName&quot;,&quot;ParameterValue&quot;: &quot;testing-lambda&quot;},
+       {&quot;ParameterKey&quot;: &quot;Handler&quot;,&quot;ParameterValue&quot;: &quot;main&quot;},
+       {&quot;ParameterKey&quot;: &quot;AppFolder&quot;,&quot;ParameterValue&quot;: &quot;app&quot;}
+],
+&quot;lambda_env_vars&quot; :{&quot;var1&quot;: &quot;value1&quot;,&quot;var2&quot;: &quot;value2&quot;}
+}
+</code></pre><p> </p>
+<h4 id="3-region">3. $region</h4>
+<pre><code>Set AWS region as env var in CICd pipeline.  
+</code></pre>
+<p>  </p>
+<h2 id="preparation">Preparation</h2>
+<h4 id="1-prepare-the-directory-structure-mkdir--p-samenvsapp">1. Prepare the Directory structure <code>mkdir -p {sam/envs,app}</code>.</h4>
+<h4 id="2-copy-lambda-code-to-app-dir">2. Copy lambda code to <code>app</code> dir.</h4>
+<h4 id="3-initialize-sam-and-copy-the-cf-template-to-sam-folder">3. Initialize SAM and copy the cf template to <code>sam</code> folder.</h4>
+<h4 id="4-prepare-the-json-env-files-as-per-number-of-env">4. Prepare the <code>.json</code> env files as per number of env.</h4>
+<h4 id="5-update-the-cicd-pipeline-with-above-script-make-sure-the-aws-authentication-install-dependency-section-updated-as-per-os-and-sam-activity-as-per-need">5. Update the CICD pipeline with above script. Make sure the AWS authentication, install dependency section updated as per OS and SAM activity as per need.</h4>
+<h4 id="6-if-all-good-then-your-pipeline-should-run-very-well-and-successfully-deploy-lambda">6. If all good then your pipeline should run very well and successfully deploy lambda.</h4>
+<p>  </p>
+<p>WoW&hellip;.Clap for self, As a DevOps You have simplified and automated the lambda deployment. Now developer can manage their lambda deployment by their own. They don&rsquo;t need devops job any more :P</p>
+
+                </div>
+                
+                <div class="post-comments">
+                    
+                </div>
+                
+            </div>
+            <footer class="footer text-center">
+<p>Copyright &copy; 2021 lokeshjawane
+</p>
+</footer>
+
+        </div>
+    </body>
